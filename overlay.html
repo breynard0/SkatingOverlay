@@ -4,13 +4,14 @@
 <script>
     const CONFIG = {
         url: "http://localhost:4192/sample.json",
-        pollingPeriodMilliseconds: 500,
+        pollingPeriodMilliseconds: 400,
+        popupActiveMilliseconds: 10000,
         alignRight: false,
         alignTop: true,
         skaterColours: [
             ["SJN", "#d76262"],
             ["PEI", "#61d567"],
-            ["CQT", "#3a6766"],
+            ["CQT", "#00ac9f"],
             ["COD", "#2090da"],
             ["HRG", "#cd9121"],
             ["DRT", "#a593d1"],
@@ -33,7 +34,7 @@
         font-family: "Open Sans", Helvetica, sans-serif;
         --primary-background: #145dae;
         --secondary-background: #424547;
-        --club-color: magenta;
+        --club-color: #424547;
     }
 
     body {
@@ -43,6 +44,8 @@
     }
 
     #skaters_list {
+        position: absolute;
+        margin: 0 1vmin 1vmin;
     }
 
     #current_title {
@@ -51,7 +54,7 @@
 
     #current_code {
         background-color: var(--primary-background);
-        padding: 0.8%;
+        padding: 0.8vmin;
         align-content: center;
         vertical-align: center;
         border-radius: 4px 0 0 4px;
@@ -60,7 +63,7 @@
     #current_name {
         border-radius: 0 4px 4px 0;
         background: var(--secondary-background);
-        padding: 0.8%;
+        padding: 0.8vmin;
 
     }
 
@@ -70,56 +73,141 @@
 
     .skater_element {
         display: flex;
-        /*width: 20%;*/
-        margin-top: 1%;
+        margin-top: 1vmin;
     }
 
     .skater_number {
-        padding: 0.4%;
+        padding: 0.4vmin;
         background-color: var(--primary-background);
         border-radius: 4px 0 0 12px;
     }
 
     .skater_name {
-        padding: 0.4%;
-        /*width: 100%;*/
-        /*white-space: nowrap;*/
-        background: linear-gradient(to right, var(--secondary-background) 25%, var(--club-color));
-        /*background-color: var(--secondary-background);*/
+        padding: 0.4vmin;
+        white-space: nowrap;
+        background-color: var(--secondary-background);
+        /* Alternatively, a gradient can be used */
+        /*background: linear-gradient(to right, var(--secondary-background) 25%, var(--club-color));*/
     }
 
     .skater_time {
-        padding: 0.4%;
+        padding: 0.4vmin;
         /*width: 4em;*/
         /*background-color: var(--secondary-background);*/
         background-color: var(--club-color);
         border-radius: 0 4px 4px 0;
         text-align: right;
     }
+
+    #results_box {
+        position: absolute;
+        width: 40vw;
+        margin-left: 30vw;
+        margin-right: 30vw;
+        margin-top: 20vh;
+        font-size: xx-large;
+        opacity: 0;
+    }
+
+    #results_title_bar {
+        display: flex;
+    }
+
+    #results_title_header {
+        background-color: var(--primary-background);
+        padding: 1vmin;
+        border-radius: 8px 8px 0 0;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    #results_title_code {
+        background-color: var(--secondary-background);
+        padding: 1vmin;
+        border-radius: 0 0 0 8px;
+    }
+
+    #results_title_name {
+        background-color: var(--secondary-background);
+        padding: 1vmin;
+        width: 100%;
+        text-align: right;
+        border-radius: 0 0 8px 0;
+    }
+
+    #results_skater_list {
+        font-size: x-large;
+    }
+
+    .results_skater_number {
+        padding: 0.8vmin;
+        background-color: var(--club-color);
+        border-radius: 4px 0 0 4px;
+    }
+
+    .results_skater_name {
+        padding: 0.8vmin;
+        background-color: var(--secondary-background);
+        width: 100%;
+    }
+
+    .results_skater_time {
+        padding: 0.8vmin;
+        background-color: var(--primary-background);
+        border-radius: 0 4px 4px 0;
+    }
+
+    .results_skater {
+        display: flex;
+        width: 100%;
+        margin-top: 1vmin;
+    }
 </style>
 <body>
 <div id="skaters_list">
     <div id="current_title">
-        <div id="current_code">
-            36A
+        <div id="current_code"></div>
+        <div id="current_name"></div>
+    </div>
+    <div id="current_skaters"></div>
+</div>
+<div id="results_box">
+    <div id="results_title_header">
+        Unofficial Results - Résultats non officiels
+    </div>
+    <div id="results_title_bar">
+        <div id="results_title_code">
+            35B
         </div>
-        <div id="current_name">
-            200 Mixte (100m)
+        <div id="results_title_name">
+            3 Laps Mixte (85m)
         </div>
     </div>
-    <div id="current_skaters">
-        <!--        <div class="skater_element">-->
-        <!--            <div class="skater_number">1</div>-->
-        <!--            <div class="skater_name">BLUE, John</div>-->
-        <!--            <div class="skater_time">9.873</div>-->
-        <!--        </div>-->
+    <div id="results_skater_list">
+        <div class="results_skater">
+            <div class="results_skater_number">1</div>
+            <div class="results_skater_name">BLUE, Charles</div>
+            <div class="results_skater_time">48.32</div>
+        </div>
     </div>
 </div>
 </body>
 <!--suppress JSUnresolvedReference -->
 <script>
+    var last_results_id = -1;
+
     function update() {
-        fetch(CONFIG.url)
+        // Correctly position skater table
+        let skater_list = document.getElementById("skaters_list");
+        if (CONFIG.alignRight) {
+            skater_list.style.right = "0";
+        }
+        if (!CONFIG.alignTop) {
+            skater_list.style.bottom = "0";
+        }
+
+        // Fetch data. The timestamp is added to avoid browser caching.
+        fetch(CONFIG.url + "?t=" + Date.now())
             .then((response) => response.json())
             .then((data) => {
                 const current_skaters = document.getElementById("current_skaters");
@@ -128,6 +216,11 @@
                     return;
                 }
 
+                // Update header
+                document.getElementById("current_code").innerText = data.currentRaceCode;
+                document.getElementById("current_name").innerText = data.currentRaceName;
+
+                // Update skaters list
                 for (const i in data.currentRaceSkaters) {
                     let skater = data.currentRaceSkaters[i];
 
@@ -185,6 +278,81 @@
                 for (let skater_time of skater_time_elements) {
                     skater_time.style.width = max_time_width.toString() + 'px';
                 }
+
+                // If new results, update and show results popup
+                if (last_results_id !== -1 && data.pastRaceId !== last_results_id) {
+                    document.getElementById("results_title_code").innerText = data.pastRaceCode;
+                    document.getElementById("results_title_name").innerText = data.pastRaceName;
+
+                    const skaterList = document.getElementById("results_skater_list");
+                    skaterList.innerText = "";
+
+                    for (const i in data.pastRaceSkaters) {
+                        let skater = data.pastRaceSkaters[i];
+
+                        let club_color = window.getComputedStyle(current_skaters).getPropertyValue("--secondary-background");
+
+                        for (const arr of CONFIG.skaterColours) {
+                            if (arr[0] === skater.skaterClub) {
+                                club_color = arr[1];
+                                break;
+                            }
+                        }
+
+                        const skaterNode = document.createElement("div");
+                        skaterNode.classList.add("results_skater")
+
+                        const skaterNumber = document.createElement("div");
+                        skaterNumber.classList.add("results_skater_number");
+                        skaterNumber.innerText = i.toString();
+                        skaterNumber.style.setProperty("--club-color", club_color)
+
+                        const skaterName = document.createElement("div");
+                        skaterName.classList.add("results_skater_name");
+                        skaterName.innerText = skater.skaterName;
+
+                        const skaterTime = document.createElement("div");
+                        skaterTime.classList.add("results_skater_time");
+                        skaterTime.innerText = skater.skaterMostRecentLap;
+
+                        skaterNode.appendChild(skaterNumber);
+                        skaterNode.appendChild(skaterName);
+                        skaterNode.appendChild(skaterTime);
+
+                        skaterList.appendChild(skaterNode);
+                    }
+
+                    const skater_time_elements = document.getElementsByClassName("results_skater_time");
+                    let max_time_width = 0;
+                    for (const skater_time of skater_time_elements) {
+                        if (skater_time.clientWidth > max_time_width) {
+                            max_time_width = skater_time.clientWidth;
+                        }
+                    }
+                    for (let skater_time of skater_time_elements) {
+                        skater_time.style.width = max_time_width.toString() + 'px';
+                    }
+
+                    // Animate fade in then back out
+                    document.getElementById("results_box").animate(
+                        [
+                            // 0% should be at 10% of the way through and 90%
+                            {opacity: 0},
+                            {opacity: 1},
+                            {opacity: 1},
+                            {opacity: 1},
+                            {opacity: 1},
+                            {opacity: 1},
+                            {opacity: 1},
+                            {opacity: 1},
+                            {opacity: 1},
+                            {opacity: 0}
+                        ],
+                        {duration: CONFIG.popupActiveMilliseconds}
+                    );
+                }
+
+                last_results_id = data.pastRaceId;
             })
             .catch(console.error);
     }
