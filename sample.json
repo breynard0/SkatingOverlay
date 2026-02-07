@@ -11,37 +11,37 @@
     {
       "skaterName": "GREEN, Jane",
       "skaterClub": "PEI",
-      "skaterMostRecentLap": 10.8
+      "skaterMostRecentLap": 10.81
     },
     {
       "skaterName": "RED, Thomas",
       "skaterClub": "CQT",
-      "skaterMostRecentLap": 7.8
+      "skaterMostRecentLap": 10.87
     },
     {
       "skaterName": "YELLOW, Mark",
       "skaterClub": "COD",
-      "skaterMostRecentLap": 25.92
+      "skaterMostRecentLap": 10.92
     },
     {
       "skaterName": "PURPLE, Matt",
       "skaterClub": "HRG",
-      "skaterMostRecentLap": null
+      "skaterMostRecentLap": 11.32
     },
     {
       "skaterName": "AQUA, Seamus",
       "skaterClub": "DRT",
-      "skaterMostRecentLap": 11.9
+      "skaterMostRecentLap": 11.91
     },
     {
       "skaterName": "MAGENTA, Cody",
       "skaterClub": "PEI",
-      "skaterMostRecentLap": 12.4192
+      "skaterMostRecentLap": 12.46
     },
     {
       "skaterName": "ORANGE, Oscar",
       "skaterClub": "SJN",
-      "skaterMostRecentLap": 9.9
+      "skaterMostRecentLap": 12.50
     }
   ],
   "pastRaceCode": "35C",
@@ -51,17 +51,17 @@
     {
       "skaterName": "TURQUOISE, Jack",
       "skaterClub": "CQT",
-      "skaterMostRecentLap": 48.311
+      "skaterMostRecentLap": 48.31
     },
     {
       "skaterName": "BLACK, Jill",
       "skaterClub": "COD",
-      "skaterMostRecentLap": 42.8
+      "skaterMostRecentLap": 42.82
     },
     {
       "skaterName": "WHITE, Steve",
       "skaterClub": "PEI",
-      "skaterMostRecentLap": 47.8
+      "skaterMostRecentLap": 47.88
     },
     {
       "skaterName": "GRAY, Justin",
@@ -71,22 +71,22 @@
     {
       "skaterName": "GREY, Matt",
       "skaterClub": "SJN",
-      "skaterMostRecentLap": null
+      "skaterMostRecentLap": 40.12
     },
     {
       "skaterName": "FUCHSIA, Eric",
       "skaterClub": "HRG",
-      "skaterMostRecentLap": 41.9
+      "skaterMostRecentLap": 41.93
     },
     {
       "skaterName": "LAVENDER, Cody",
       "skaterClub": "PEI",
-      "skaterMostRecentLap": 42.4192
+      "skaterMostRecentLap": 42.41
     },
     {
       "skaterName": "PINK, Lucas",
       "skaterClub": "HRG",
-      "skaterMostRecentLap": 49.9
+      "skaterMostRecentLap": 49.94
     }
   ]
 }

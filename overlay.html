@@ -238,7 +238,7 @@
 
                     const skaterNumber = document.createElement("div");
                     skaterNumber.classList.add("skater_number");
-                    skaterNumber.innerText = i.toString();
+                    skaterNumber.innerText = (parseInt(i) + 1).toString();
 
                     const skaterName = document.createElement("div");
                     skaterName.classList.add("skater_name");
@@ -304,7 +304,7 @@
 
                         const skaterNumber = document.createElement("div");
                         skaterNumber.classList.add("results_skater_number");
-                        skaterNumber.innerText = i.toString();
+                        skaterNumber.innerText = (parseInt(i) + 1).toString();
                         skaterNumber.style.setProperty("--club-color", club_color)
 
                         const skaterName = document.createElement("div");

@@ -13,7 +13,7 @@ the current one saved. The results will pop up as soon as a new race ID is detec
 `currentRaceName` (String): This represents the name shown in the current race's titlebar.
 
 `currentRaceId` (Integer): This is a unique integer identifying this race. There are no restrictions on what this number
-can be, other that it must be different for every race and it cannot be equal to `-1`. It does not have to list them 
+can be, other that it must be different for every race and it cannot be equal to `-1`. It does not have to list them
 sequentially, it can be random digits so long as they are unique.
 
 `currentRaceSkaters` (Array): An array listing all skaters in the current race. They will be displayed and numbered in
@@ -24,8 +24,9 @@ follows:
 - `skaterName` (String): A string that contains the name of the skater.
 - `skaterClub` (String): A string that contains an identifier to the skater's club. This will not be show directly,
   rather it will be matched with the configuration in the HTML to colour the skater's box.
-- `skaterMostRecentLap` (Float): A floating point number that represents the most recent skater lap time to be shown.
-  This is permitted to be `null` if no such time is available.
+- `skaterMostRecentLap` (Float, String): A floating point number or string that represents the most recent skater lap
+  time to be shown. This is permitted to be `null` if no such time is available. A string may be better since a float
+  would lose trailing zeros (e.g. 12.50 → 12.5).
 
 `pastRaceCode`, `pastRaceName`, `pastRaceId`, `pastRaceSkaters`: These fields are identical to their `currentRace`
 counterparts, and they will be used in the popup summary of race results. Here are a few notes:
@@ -60,4 +61,5 @@ each of the subarrays within this large array, the first element is a string tha
 Cross-origin requests are necessary in order for the functionality of this overlay, because this client would request
 the JSON file from the server which is at a separate origin. Thus, it is necessary that the server response includes the
 correct CORS headers, or the request will fail. The Python server file in this repository provides an example for the
-headers. More information relating to CORS can be found [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS).
+headers. More information relating to CORS can be
+found [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS).
