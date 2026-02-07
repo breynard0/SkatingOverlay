@@ -64,5 +64,6 @@ each of the subarrays within this large array, the first element is a string tha
 Cross-origin requests are necessary in order for the functionality of this overlay, because this client would request
 the JSON file from the server which is at a separate origin. Thus, it is necessary that the server response includes the
 correct CORS headers, or the request will fail. The Python server file in this repository provides an example for the
-headers. More information relating to CORS can be
+headers. In my experience, it is better to run a local web server then point the OBS Browser source to `localhost` rather than 
+use the "Local File" option in OBS Studio. More information relating to CORS can be
 found [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS).
