@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--Configure settings here-->
+<script>
+    const CONFIG = {
+        url: "http://localhost:4192/sample.json",
+        pollingPeriodMilliseconds: 500,
+        alignRight: false,
+        alignTop: true,
+        skaterColours: [
+            ["SJN", "#d76262"],
+            ["PEI", "#61d567"],
+            ["CQT", "#3a6766"],
+            ["COD", "#2090da"],
+            ["HRG", "#cd9121"],
+            ["DRT", "#a593d1"],
+        ]
+    };
+</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Skating Overlay</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+          rel="stylesheet">
+</head>
+<style>
+
+    * {
+        font-family: "Open Sans", Helvetica, sans-serif;
+        --primary-background: #145dae;
+        --secondary-background: #424547;
+        --club-color: magenta;
+    }
+
+    body {
+        background-color: #000000;
+        /*background-color: transparent;*/
+        color: white;
+    }
+
+    #skaters_list {
+    }
+
+    #current_title {
+        display: flex;
+    }
+
+    #current_code {
+        background-color: var(--primary-background);
+        padding: 0.8%;
+        align-content: center;
+        vertical-align: center;
+        border-radius: 4px 0 0 4px;
+    }
+
+    #current_name {
+        border-radius: 0 4px 4px 0;
+        background: var(--secondary-background);
+        padding: 0.8%;
+
+    }
+
+    #current_skaters {
+
+    }
+
+    .skater_element {
+        display: flex;
+        /*width: 20%;*/
+        margin-top: 1%;
+    }
+
+    .skater_number {
+        padding: 0.4%;
+        background-color: var(--primary-background);
+        border-radius: 4px 0 0 12px;
+    }
+
+    .skater_name {
+        padding: 0.4%;
+        /*width: 100%;*/
+        /*white-space: nowrap;*/
+        background: linear-gradient(to right, var(--secondary-background) 25%, var(--club-color));
+        /*background-color: var(--secondary-background);*/
+    }
+
+    .skater_time {
+        padding: 0.4%;
+        /*width: 4em;*/
+        /*background-color: var(--secondary-background);*/
+        background-color: var(--club-color);
+        border-radius: 0 4px 4px 0;
+        text-align: right;
+    }
+</style>
+<body>
+<div id="skaters_list">
+    <div id="current_title">
+        <div id="current_code">
+            36A
+        </div>
+        <div id="current_name">
+            200 Mixte (100m)
+        </div>
+    </div>
+    <div id="current_skaters">
+        <!--        <div class="skater_element">-->
+        <!--            <div class="skater_number">1</div>-->
+        <!--            <div class="skater_name">BLUE, John</div>-->
+        <!--            <div class="skater_time">9.873</div>-->
+        <!--        </div>-->
+    </div>
+</div>
+</body>
+<!--suppress JSUnresolvedReference -->
+<script>
+    function update() {
+        fetch(CONFIG.url)
+            .then((response) => response.json())
+            .then((data) => {
+                const current_skaters = document.getElementById("current_skaters");
+                current_skaters.innerHTML = '';
+                if (data.length === 0) {
+                    return;
+                }
+
+                for (const i in data.currentRaceSkaters) {
+                    let skater = data.currentRaceSkaters[i];
+
+                    let club_color = window.getComputedStyle(current_skaters).getPropertyValue("--secondary-background");
+
+                    for (const arr of CONFIG.skaterColours) {
+                        if (arr[0] === skater.skaterClub) {
+                            club_color = arr[1];
+                            break;
+                        }
+                    }
+
+                    const skaterNode = document.createElement("div");
+                    skaterNode.classList.add("skater_element")
+
+                    const skaterNumber = document.createElement("div");
+                    skaterNumber.classList.add("skater_number");
+                    skaterNumber.innerText = i.toString();
+
+                    const skaterName = document.createElement("div");
+                    skaterName.classList.add("skater_name");
+                    skaterName.innerText = skater.skaterName;
+                    skaterName.style.setProperty("--club-color", club_color)
+
+                    const skaterTime = document.createElement("div");
+                    skaterTime.classList.add("skater_time");
+                    skaterTime.innerText = skater.skaterMostRecentLap;
+                    skaterTime.style.setProperty("--club-color", club_color)
+
+                    skaterNode.appendChild(skaterNumber);
+                    skaterNode.appendChild(skaterName);
+                    skaterNode.appendChild(skaterTime);
+
+                    current_skaters.appendChild(skaterNode)
+                }
+
+                // Make all name and number boxes the same width
+                const skater_name_elements = document.getElementsByClassName("skater_name");
+                let max_name_width = 0;
+                for (const skater_name of skater_name_elements) {
+                    if (skater_name.clientWidth > max_name_width) {
+                        max_name_width = skater_name.clientWidth;
+                    }
+                }
+                for (let skater_name of skater_name_elements) {
+                    skater_name.style.width = max_name_width.toString() + 'px';
+                }
+                const skater_time_elements = document.getElementsByClassName("skater_time");
+                let max_time_width = 0;
+                for (const skater_time of skater_time_elements) {
+                    if (skater_time.clientWidth > max_time_width) {
+                        max_time_width = skater_time.clientWidth;
+                    }
+                }
+                for (let skater_time of skater_time_elements) {
+                    skater_time.style.width = max_time_width.toString() + 'px';
+                }
+            })
+            .catch(console.error);
+    }
+
+    update();
+    (function loop() {
+        setTimeout(() => {
+            update()
+            loop();
+        }, CONFIG.pollingPeriodMilliseconds);
+    })();
+</script>
+</html>
