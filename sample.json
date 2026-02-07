@@ -1,0 +1,92 @@
+{
+  "currentRaceCode": "36A",
+  "currentRaceName": "200 Mixte (100m)",
+  "currentRaceId": 0,
+  "currentRaceSkaters": [
+    {
+      "skaterName": "BLUE, John",
+      "skaterClub": "SJN",
+      "skaterMostRecentLap": 10.31
+    },
+    {
+      "skaterName": "GREEN, Jane",
+      "skaterClub": "PEI",
+      "skaterMostRecentLap": 10.8
+    },
+    {
+      "skaterName": "RED, Thomas",
+      "skaterClub": "CQT",
+      "skaterMostRecentLap": 7.8
+    },
+    {
+      "skaterName": "YELLOW, Mark",
+      "skaterClub": "COD",
+      "skaterMostRecentLap": 25.92
+    },
+    {
+      "skaterName": "PURPLE, Matt",
+      "skaterClub": "HRG",
+      "skaterMostRecentLap": null
+    },
+    {
+      "skaterName": "AQUA, Seamus",
+      "skaterClub": "DRT",
+      "skaterMostRecentLap": 11.9
+    },
+    {
+      "skaterName": "MAGENTA, Cody",
+      "skaterClub": "PEI",
+      "skaterMostRecentLap": 12.4192
+    },
+    {
+      "skaterName": "ORANGE, Oscar",
+      "skaterClub": "SJN",
+      "skaterMostRecentLap": 9.9
+    }
+  ],
+  "pastRaceCode": "35C",
+  "pastRaceName": "400 Mixte (100m)",
+  "pastRaceId": 1,
+  "pastRaceSkaters": [
+    {
+      "skaterName": "TURQUOISE, Jack",
+      "skaterClub": "CQT",
+      "skaterMostRecentLap": 48.311
+    },
+    {
+      "skaterName": "BLACK, Jill",
+      "skaterClub": "COD",
+      "skaterMostRecentLap": 42.8
+    },
+    {
+      "skaterName": "WHITE, Steve",
+      "skaterClub": "PEI",
+      "skaterMostRecentLap": 47.8
+    },
+    {
+      "skaterName": "GRAY, Justin",
+      "skaterClub": "SJN",
+      "skaterMostRecentLap": 45.92
+    },
+    {
+      "skaterName": "GREY, Matt",
+      "skaterClub": "SJN",
+      "skaterMostRecentLap": null
+    },
+    {
+      "skaterName": "FUCHSIA, Eric",
+      "skaterClub": "HRG",
+      "skaterMostRecentLap": 41.9
+    },
+    {
+      "skaterName": "LAVENDER, Cody",
+      "skaterClub": "PEI",
+      "skaterMostRecentLap": 42.4192
+    },
+    {
+      "skaterName": "PINK, Lucas",
+      "skaterClub": "HRG",
+      "skaterMostRecentLap": 49.9
+    }
+  ]
+}
