@@ -6,6 +6,9 @@ a JSON string that follows the specified format, and an example can be found in 
 same JSON document can be returned multiple times, and the overlay will only update when the document is different from
 the current one saved. The results will pop up as soon as a new race ID is detected.
 
+## Video Demo
+![](SkaterOverlayShowcase.mp4)
+
 ## JSON Format
 
 `currentRaceCode` (String): This represents the alphanumeric code for the current race, such as `36A`.

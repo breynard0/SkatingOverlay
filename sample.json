@@ -6,7 +6,7 @@
     {
       "skaterName": "BLUE, John",
       "skaterClub": "SJN",
-      "skaterMostRecentLap": 10.31
+      "skaterMostRecentLap": 10.61
     },
     {
       "skaterName": "GREEN, Jane",
@@ -46,7 +46,7 @@
   ],
   "pastRaceCode": "35C",
   "pastRaceName": "400 Mixte (100m)",
-  "pastRaceId": 1,
+  "pastRaceId": 2,
   "pastRaceSkaters": [
     {
       "skaterName": "TURQUOISE, Jack",
