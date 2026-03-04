@@ -7,7 +7,8 @@ same JSON document can be returned multiple times, and the overlay will only upd
 the current one saved. The results will pop up as soon as a new race ID is detected.
 
 ## Video Demo
-![](SkaterOverlayShowcase.mp4)
+
+https://github.com/user-attachments/assets/d121c096-8ee3-4136-85f2-3140efb49407
 
 ## JSON Format
 
