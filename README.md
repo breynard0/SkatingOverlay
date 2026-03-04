@@ -2,6 +2,11 @@
 
 This is a single HTML file, intended for use in a "Browser" source of an OBS Studio stream. It will fetch information at a configurable period from a specified URL via HTTP GET requests, then this will be displayed. The final race results window will pop up if either the race ID changes or on the rising edge of the `all_finished` property.
 
+## Screenshot of overlay
+
+<img width="1920" height="1080" alt="overlay_screenshot" src="https://github.com/user-attachments/assets/e9a23790-754e-43c5-b326-1cf92c9b348b" />
+
+
 ## HTML Configuration
 
 The top of the HTML file contains some values for configuration. The following is a summary of all configuration
