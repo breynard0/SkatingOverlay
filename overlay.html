@@ -3,19 +3,17 @@
 <!--Configure settings here-->
 <script>
     const CONFIG = {
-        url: "http://localhost:4192/sample.json",
+        colors_url: "http://192.168.1.51:5000/api/colors",
+        current_race_url: "http://192.168.1.51:5000/api/current_race",
+
+        // Alternate URLs for development
+        // colors_url: "http://localhost:4192/colors.json",
+        // current_race_url: "http://localhost:4192/current_race.json",
+
         pollingPeriodMilliseconds: 400,
         popupActiveMilliseconds: 10000,
         alignRight: false,
         alignTop: true,
-        skaterColours: [
-            ["SJN", "#d76262"],
-            ["PEI", "#61d567"],
-            ["CQT", "#00ac9f"],
-            ["COD", "#2090da"],
-            ["HRG", "#cd9121"],
-            ["DRT", "#a593d1"],
-        ]
     };
 </script>
 <head>
@@ -34,11 +32,12 @@
         font-family: "Open Sans", Helvetica, sans-serif;
         --primary-background: #145dae;
         --secondary-background: #424547;
-        --club-color: #424547;
+
+        --rank-foreground: white;
+        --rank-background: var(--primary-background);
     }
 
     body {
-        /*background-color: #000000;*/
         background-color: transparent;
         color: white;
     }
@@ -77,31 +76,35 @@
     }
 
     .skater_number {
-        padding: 0.4vmin;
-        background-color: var(--primary-background);
+        padding: 0.8vmin;
+        color: var(--rank-foreground);
+        background-color: var(--rank-background);
         border-radius: 4px 0 0 12px;
+        display: flex;
+        align-items: center;
     }
 
     .skater_name {
         padding: 0.4vmin;
         white-space: nowrap;
+        display: flex;
+        align-items: center;
         background-color: var(--secondary-background);
-        /* Alternatively, a gradient can be used */
-        /*background: linear-gradient(to right, var(--secondary-background) 25%, var(--club-color));*/
     }
 
     .skater_time {
         padding: 0.4vmin;
-        /*width: 4em;*/
-        /*background-color: var(--secondary-background);*/
-        background-color: var(--club-color);
+        background-color: var(--secondary-background);
         border-radius: 0 4px 4px 0;
         text-align: right;
+        display: flex;
+        align-items: center;
+        justify-content: right;
     }
 
     #results_box {
         position: absolute;
-        width: 40vw;
+        width: 60vw;
         margin-left: 30vw;
         margin-right: 30vw;
         margin-top: 20vh;
@@ -141,7 +144,8 @@
 
     .results_skater_number {
         padding: 0.8vmin;
-        background-color: var(--club-color);
+        color: var(--rank-foreground);
+        background-color: var(--rank-background);
         border-radius: 4px 0 0 4px;
     }
 
@@ -186,15 +190,46 @@
     <div id="results_skater_list">
         <div class="results_skater">
             <div class="results_skater_number">1</div>
-            <div class="results_skater_name">BLUE, Charles</div>
+            <div class="results_skater_name">TEST, Skater</div>
             <div class="results_skater_time">48.32</div>
         </div>
     </div>
 </div>
 </body>
 <!--suppress JSUnresolvedReference -->
-<script>
-    var last_results_id = -1;
+<script type="module">
+    // Fetch helmet colours
+    let helmet_colours = await fetch(CONFIG.colors_url + "?t=" + Date.now())
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.length !== 0) {
+                return data;
+            }
+        });
+
+    // Function to move results to internal type, sorting by skater rank
+    // Insertion sort is plenty fast for this
+    function sort_skaters(results_in) {
+        let skater_results = [];
+        for (const skater of results_in) {
+            let i = 0;
+            while (i < skater_results.length && skater_results[i].rank < skater.rank) {
+                i++;
+            }
+
+            let new_skater_entry = {};
+            new_skater_entry.rank = skater.rank;
+            new_skater_entry.name = skater.name;
+            let intervals = skater.lap_intervals;
+            new_skater_entry.recent_lap = intervals[intervals.length - 1];
+            new_skater_entry.display_time = skater.display_time;
+
+            skater_results.splice(i, 0, new_skater_entry);
+        }
+        return skater_results;
+    }
+
+    let last_race_json = "{}";
 
     function update() {
         // Correctly position skater table
@@ -206,8 +241,8 @@
             skater_list.style.bottom = "0";
         }
 
-        // Fetch data. The timestamp is added to avoid browser caching.
-        fetch(CONFIG.url + "?t=" + Date.now())
+        // Fetch current race data. The timestamp is added to avoid browser caching.
+        fetch(CONFIG.current_race_url + "?t=" + Date.now())
             .then((response) => response.json())
             .then((data) => {
                 const current_skaters = document.getElementById("current_skaters");
@@ -217,38 +252,29 @@
                 }
 
                 // Update header
-                document.getElementById("current_code").innerText = data.currentRaceCode;
-                document.getElementById("current_name").innerText = data.currentRaceName;
+                document.getElementById("current_code").innerText = data.current_race_id;
+                document.getElementById("current_name").innerText = data.race_description;
+
+                let skater_list = sort_skaters(data.results);
 
                 // Update skaters list
-                for (const i in data.currentRaceSkaters) {
-                    let skater = data.currentRaceSkaters[i];
-
-                    let club_color = window.getComputedStyle(current_skaters).getPropertyValue("--secondary-background");
-
-                    for (const arr of CONFIG.skaterColours) {
-                        if (arr[0] === skater.skaterClub) {
-                            club_color = arr[1];
-                            break;
-                        }
-                    }
-
+                for (const skater of skater_list) {
                     const skaterNode = document.createElement("div");
                     skaterNode.classList.add("skater_element")
 
                     const skaterNumber = document.createElement("div");
                     skaterNumber.classList.add("skater_number");
-                    skaterNumber.innerText = (parseInt(i) + 1).toString();
+                    skaterNumber.innerText = skater.rank;
+                    skaterNumber.style.setProperty("--rank-foreground", helmet_colours[skater.rank.toString()].fg);
+                    skaterNumber.style.setProperty("--rank-background", helmet_colours[skater.rank.toString()].bg);
 
                     const skaterName = document.createElement("div");
                     skaterName.classList.add("skater_name");
-                    skaterName.innerText = skater.skaterName;
-                    skaterName.style.setProperty("--club-color", club_color)
+                    skaterName.innerText = skater.name;
 
                     const skaterTime = document.createElement("div");
                     skaterTime.classList.add("skater_time");
-                    skaterTime.innerText = skater.skaterMostRecentLap;
-                    skaterTime.style.setProperty("--club-color", club_color)
+                    skaterTime.innerText = skater.recent_lap;
 
                     skaterNode.appendChild(skaterNumber);
                     skaterNode.appendChild(skaterName);
@@ -280,40 +306,34 @@
                 }
 
                 // If new results, update and show results popup
-                if (last_results_id !== -1 && data.pastRaceId !== last_results_id) {
-                    document.getElementById("results_title_code").innerText = data.pastRaceCode;
-                    document.getElementById("results_title_name").innerText = data.pastRaceName;
+                // Results are new if either the race ID changes or the rising edge of the all_finished property
+                const is_new_race_id = last_race_json !== "{}" && last_race_json.current_race_id !== data.current_race_id;
+                const current_race_just_finished = data.all_finished && !last_race_json.all_finished;
+                if (is_new_race_id || current_race_just_finished) {
+                    document.getElementById("results_title_code").innerText = last_race_json.current_race_id;
+                    document.getElementById("results_title_name").innerText = last_race_json.race_description;
 
                     const skaterList = document.getElementById("results_skater_list");
                     skaterList.innerText = "";
 
-                    for (const i in data.pastRaceSkaters) {
-                        let skater = data.pastRaceSkaters[i];
-
-                        let club_color = window.getComputedStyle(current_skaters).getPropertyValue("--secondary-background");
-
-                        for (const arr of CONFIG.skaterColours) {
-                            if (arr[0] === skater.skaterClub) {
-                                club_color = arr[1];
-                                break;
-                            }
-                        }
-
+                    let past_skaters = sort_skaters(last_race_json.results);
+                    for (const skater of past_skaters) {
                         const skaterNode = document.createElement("div");
                         skaterNode.classList.add("results_skater")
 
                         const skaterNumber = document.createElement("div");
                         skaterNumber.classList.add("results_skater_number");
-                        skaterNumber.innerText = (parseInt(i) + 1).toString();
-                        skaterNumber.style.setProperty("--club-color", club_color)
+                        skaterNumber.innerText = skater.rank;
+                        skaterNumber.style.setProperty("--rank-foreground", helmet_colours[skater.rank.toString()].fg);
+                        skaterNumber.style.setProperty("--rank-background", helmet_colours[skater.rank.toString()].bg);
 
                         const skaterName = document.createElement("div");
                         skaterName.classList.add("results_skater_name");
-                        skaterName.innerText = skater.skaterName;
+                        skaterName.innerText = skater.name;
 
                         const skaterTime = document.createElement("div");
                         skaterTime.classList.add("results_skater_time");
-                        skaterTime.innerText = skater.skaterMostRecentLap;
+                        skaterTime.innerText = skater.display_time;
 
                         skaterNode.appendChild(skaterNumber);
                         skaterNode.appendChild(skaterName);
@@ -352,7 +372,7 @@
                     );
                 }
 
-                last_results_id = data.pastRaceId;
+                last_race_json = data;
             })
             .catch(console.error);
     }

@@ -4,7 +4,7 @@ import mimetypes
 from functools import partial
 
 PORT = 4192
-DIRECTORY = "."
+DIRECTORY = "sample"
 
 # Explicitly map .json to application/json
 mimetypes.add_type('application/json', '.json')

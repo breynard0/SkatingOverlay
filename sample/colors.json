@@ -1,0 +1,62 @@
+{
+  "1": {
+    "bg": "#ffffff",
+    "fg": "black",
+    "label": "White"
+  },
+  "2": {
+    "bg": "#cc6d6a",
+    "fg": "black",
+    "label": "Light Red"
+  },
+  "3": {
+    "bg": "#fcea48",
+    "fg": "black",
+    "label": "Yellow"
+  },
+  "4": {
+    "bg": "#00a31b",
+    "fg": "black",
+    "label": "Green"
+  },
+  "5": {
+    "bg": "#00cdd4",
+    "fg": "black",
+    "label": "Cyan"
+  },
+  "6": {
+    "bg": "#ffa51d",
+    "fg": "black",
+    "label": "Orange"
+  },
+  "7": {
+    "bg": "#b1b1b1",
+    "fg": "black",
+    "label": "Gray"
+  },
+  "8": {
+    "bg": "#474747",
+    "fg": "white",
+    "label": "Black"
+  },
+  "9": {
+    "bg": "#de07c5",
+    "fg": "black",
+    "label": "Pink"
+  },
+  "10": {
+    "bg": "#0f06bd",
+    "fg": "white",
+    "label": "Dark Blue"
+  },
+  "11": {
+    "bg": "#6106bd",
+    "fg": "black",
+    "label": "Deep Purple"
+  },
+  "12": {
+    "bg": "#91db07",
+    "fg": "black",
+    "label": "Lime"
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "all_finished": false,
+  "config": {
+    "sprint_laps": [
+      21,
+      14,
+      7
+    ],
+    "view_widths": {
+      "announcer": "75",
+      "coach": "95",
+      "counter": "75"
+    }
+  },
+  "current_race_id": "1A",
+  "eliminations": [],
+  "event_name": "",
+  "gun_lap_reached": false,
+  "gun_time": "18:33:52.632",
+  "is_points_race": false,
+  "locked": true,
+  "log": [
+    "[18:34:51] RACE FINISHED & LOCKED",
+    "[18:34:46] Lane 5 Finished",
+    "[18:34:36] Lane 4 Finished",
+    "[18:34:36] Lane 6 Finished",
+    "[18:34:28] Lane 1 Finished",
+    "[18:34:28] Lane 3 Finished",
+    "[18:34:22] Lane 2 Finished",
+    "[18:33:53] Gun Fired at 18:33:52.632",
+    "[18:03:39] Initialized Race 1B"
+  ],
+  "loop_status": "OFF",
+  "points_data": {},
+  "race_description": "3 Qualification 10 (85m) Mixte 2+4",
+  "race_laps": 3,
+  "results": [
+    {
+      "club": "Saint John",
+      "display_time": "0:28.192",
+      "lane": "2",
+      "lap_intervals": [
+        10.375,
+        9.45,
+        8.367
+      ],
+      "last_read": 28.192,
+      "name": "SMITH, Adler",
+      "rank": 1,
+      "raw_time": 28.192,
+      "stats": {
+        "fast": "8.367",
+        "median": "8.909",
+        "slow": "9.450"
+      },
+      "status": "FINISHED",
+      "to_go": 0,
+      "total_laps": 3
+    },
+    {
+      "club": "Codiac Cyclones",
+      "display_time": "0:34.422",
+      "lane": "3",
+      "lap_intervals": [
+        10.461,
+        9.348,
+        14.613
+      ],
+      "last_read": 34.422,
+      "name": "PEAKER, Freya",
+      "rank": 2,
+      "raw_time": 34.422,
+      "stats": {
+        "fast": "9.348",
+        "median": "11.980",
+        "slow": "14.613"
+      },
+      "status": "FINISHED",
+      "to_go": 0,
+      "total_laps": 3
+    },
+    {
+      "club": "Caraquet",
+      "display_time": "0:34.598",
+      "lane": "1",
+      "lap_intervals": [
+        10.336,
+        14.86,
+        9.402
+      ],
+      "last_read": 34.598,
+      "name": "SIMON, Arthur",
+      "rank": 3,
+      "raw_time": 34.598,
+      "stats": {
+        "fast": "9.402",
+        "median": "12.131",
+        "slow": "14.860"
+      },
+      "status": "FINISHED",
+      "to_go": 0,
+      "total_laps": 3
+    },
+    {
+      "club": "Caraquet",
+      "display_time": "0:42.239",
+      "lane": "6",
+      "lap_intervals": [
+        10.606,
+        23.613,
+        8.02
+      ],
+      "last_read": 42.239,
+      "name": "DORSAINVIL, Alino Donald",
+      "rank": 4,
+      "raw_time": 42.239,
+      "stats": {
+        "fast": "8.020",
+        "median": "15.816",
+        "slow": "23.613"
+      },
+      "status": "FINISHED",
+      "to_go": 0,
+      "total_laps": 3
+    },
+    {
+      "club": "Codiac Cyclones",
+      "display_time": "0:42.317",
+      "lane": "4",
+      "lap_intervals": [
+        19.77,
+        8.566,
+        13.981
+      ],
+      "last_read": 42.317,
+      "name": "KOUM, Mathis",
+      "rank": 5,
+      "raw_time": 42.317,
+      "stats": {
+        "fast": "8.566",
+        "median": "11.274",
+        "slow": "13.981"
+      },
+      "status": "FINISHED",
+      "to_go": 0,
+      "total_laps": 3
+    },
+    {
+      "club": "Saint John",
+      "display_time": "0:52.735",
+      "lane": "5",
+      "lap_intervals": [
+        34.2,
+        8.195,
+        10.34
+      ],
+      "last_read": 52.735,
+      "name": "ZHANG, Ruby",
+      "rank": 6,
+      "raw_time": 52.735,
+      "stats": {
+        "fast": "8.195",
+        "median": "9.268",
+        "slow": "10.340"
+      },
+      "status": "FINISHED",
+      "to_go": 0,
+      "total_laps": 3
+    }
+  ],
+  "status": "LIVE"
+}
